@@ -1,11 +1,16 @@
 <template>
   <div>
-    <h1>app</h1>
+    app
+    <test />
   </div>
 </template>
 
 <script>
+import test from '@/components/test'
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    test
+  }
 }
 </script>

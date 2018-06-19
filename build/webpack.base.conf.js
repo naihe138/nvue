@@ -1,6 +1,8 @@
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
 // 定义resolve函数
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -42,6 +44,38 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         include: resolve('src')
+      },
+      {
+        test: /\.s?css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'static/img/[name].[hash:7].[ext]'
+        }
+      },
+      {
+        test: /.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'static/media/[name].[hash:7].[ext]'
+        }
+      },
+      {
+        test: /.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'static/fonts/[name].[hash:7].[ext]'
+        }
       }
     ]
   },
@@ -59,6 +93,10 @@ module.exports = {
         removeAttributeQuotes: true
       },
       chunksSortMode: 'dependency'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'static/css/[name].[hash].css',
+      chunkFilename: 'static/css/[name].[hash].css'
     })
   ]
 }
