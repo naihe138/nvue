@@ -5,6 +5,9 @@ const utils = require('./utils')
 const isProduction = process.env.NODE_ENV === 'production'
 
 function resolve(dir) {
+  // path.join() 方法使用平台特定的分隔符把全部给定的 path 片段连接到一起，并规范化生成的路径。
+  // path.join('/foo', 'bar', 'baz/asdf')
+  // 返回: '/foo/bar/baz/asdf'
   return path.join(__dirname, '..', dir)
 }
 
@@ -27,6 +30,17 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: [resolve('src')],
+        exclude: /node_modules/,
+        options: {
+          formatter: require('eslint-friendly-formatter'),
+          emitWarning: !config.dev.showEslintErrorsInOverlay
+        }
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',

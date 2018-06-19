@@ -5,7 +5,7 @@ module.exports = {
     assetsSubDirectory: 'static', // 静态文件目录
     assetsPublicPath: '/', // 相对文件路径
     proxyTable: {},
-    host: 'localhost',
+    host: '0.0.0.0',
     port: '8000',
     autoOpenBrowser: false, // 是否自动打开浏览器
     errorOverlay: true, // 浏览器错误提示遮罩层
@@ -16,5 +16,26 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map', // Source Maps
     cssSourceMap: true, // css Source Maps
     cacheBusting: false, // vue debugg 提示
+  },
+  build: {
+    // html模板
+    index: path.resolve(__dirname, '../dist/index.html'),
+
+    // Paths
+    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
+    // 生产环境的souce map
+    productionSourceMap: false,
+    // https://webpack.js.org/configuration/devtool/#production
+    devtool: '#source-map',
+    // 开启静态文件的Gzip压缩
+    // 如果是true 的话  需要 npm install --save-dev compression-webpack-plugin
+    productionGzip: false,
+    productionGzipExtensions: ['js', 'css'],
+
+    // 打包完成显示包大小的状态分析
+    // `npm run build --report`
+    bundleAnalyzerReport: process.env.npm_config_report
   }
 }

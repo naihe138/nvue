@@ -1,5 +1,5 @@
 # nvue
-一个用`webpack4`打包的`vue` 的项目，一步一步带你实现一个vue的打包的项目，每一个commit对应一个步骤。
+一个用`webpack4`打包的`vue` 的项目，参照`vue-cli`的`webpack`配置，一步一步带你实现一个vue的打包的项目，每一个commit对应一个步骤。
 
 
 ### clone project
@@ -122,3 +122,79 @@ module.exports = {
 在`webpack.dev.conf.js`中，通过`webpack-dev-server `插件来开启热重载服务，同时配置自动补全css兼容代码的插件，`postcss-loader`
 
 运行`npm run dev` 或者 `yarn dev ` 就可以启动服务了
+
+### 四、配置打包环境，对应第四次commit
+
+通过`build/config.js`来设置开发配置。如下注释
+
+````
+const path = require('path')
+
+module.exports = {
+  +++
+  build: {
+    // html模板
+    index: path.resolve(__dirname, '../dist/index.html'),
+    // Paths
+    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
+    // 生产环境的souce map
+    productionSourceMap: false,
+    devtool: '#source-map',
+    // 开启静态文件的Gzip压缩
+    // 如果是true 的话  需要 npm install --save-dev compression-webpack-plugin
+    productionGzip: false,
+    productionGzipExtensions: ['js', 'css'],
+
+    // 打包完成显示包大小的状态分析
+    // `npm run build --report`
+    bundleAnalyzerReport: process.env.npm_config_report
+  }
+}
+
+````
+运行`npm run build` 或者 `yarn build ` 就可以实现打包vue项目啦。
+
+### 五、检查版本，优化打包输出和Eslint设置，对应第五次commit
+
+在`check-version.js`中用 `shelljs `模块检查时候有npm命令，` semver`模块语义化版本号，然后在`build.js`合并`webpack.prod.conf.js`的的配置，然后组在格式化输出。
+
+````javascript
+
+// 检查时候有安装npm命令
+if (shell.which('npm')) {
+  versionRequirements.push({
+    name: 'npm',
+    currentVersion: exec('npm --version'),
+    versionRequirement: packageConfig.engines.npm
+  })
+}
+
+// 格式化输出
+process.stdout.write(stats.toString({
+  colors: true,
+  modules: false,
+  children: false,
+  chunks: false,
+  chunkModules: false
+}) + '\n\n')
+
+````
+
+通过eslint-loader 来配置eslint的检查，建立.eslintrc.js去设置规则
+
+````javascript
+{
+  test: /\.(js|vue)$/,
+  loader: 'eslint-loader',
+  enforce: 'pre',
+  include: [resolve('src')],
+  exclude: /node_modules/,
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    emitWarning: !config.dev.showEslintErrorsInOverlay
+  }
+},
+
+````

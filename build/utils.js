@@ -10,7 +10,6 @@ exports.assetsPath = function (dir) {
   return path.posix.join(assetsSubDirectory, dir)
 }
 
-
 exports.createNotifierCallback = () => {
   const notifier = require('node-notifier')
 

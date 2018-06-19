@@ -13,7 +13,7 @@ export default {
   name: 'test',
   data() {
     return {
-      msg: '我是msg112311'
+      msg: '我是msg1123'
     }
   }
 }
