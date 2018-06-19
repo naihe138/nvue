@@ -89,3 +89,36 @@ module.exports = {
 ````
 
 运行 `webpack --config build/webpack.base.conf.js`
+
+### 三、配置热加载、代理等开发环境，对应第三次commit
+
+通过`build/config.js`来设置开发配置。如下注释
+
+````javascript
+
+const path = require('path')
+
+module.exports = {
+  dev: {
+    assetsSubDirectory: 'static', // 静态文件目录
+    assetsPublicPath: '/', // 相对文件路径
+    proxyTable: {},
+    host: 'localhost',
+    port: '8000',
+    autoOpenBrowser: false, // 是否自动打开浏览器
+    errorOverlay: true, // 浏览器错误提示遮罩层
+    notifyOnErrors: true, // 编译错误的时候通知提示，需要friendly-errors-webpack-plugin 配合
+    poll: false,
+    useEslint: true, // 便宜使用eslint-loader模块
+    showEslintErrorsInOverlay: false, // eslint浏览器错误提示遮罩层
+    devtool: 'cheap-module-eval-source-map', // Source Maps
+    cssSourceMap: true, // css Source Maps
+    cacheBusting: false, // vue debugg 提示
+  }
+}
+
+````
+
+在`webpack.dev.conf.js`中，通过`webpack-dev-server `插件来开启热重载服务，同时配置自动补全css兼容代码的插件，`postcss-loader`
+
+运行`npm run dev` 或者 `yarn dev ` 就可以启动服务了

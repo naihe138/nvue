@@ -1,36 +1,30 @@
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const config = require('./config')
+const utils = require('./utils')
+const isProduction = process.env.NODE_ENV === 'production'
 
-// 定义resolve函数
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
-  // 开发模式
-  mode: 'development',
   context: path.resolve(__dirname, '../'),
-  // 文件入口
   entry: {
     app: './src/main.js'
   },
-  // 文件出口
   output: {
     path: resolve('dist'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: isProduction ? config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
-  // 处理路径或者后缀名
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue': 'vue/dist/vue.esm.js',
+      'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src')
     }
   },
-  // 模块，loader
   module: {
     rules: [
       {
@@ -46,19 +40,11 @@ module.exports = {
         include: resolve('src')
       },
       {
-        test: /\.s?css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ]
-      },
-      {
         test: /.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'static/img/[name].[hash:7].[ext]'
+          name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
       {
@@ -66,7 +52,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'static/media/[name].[hash:7].[ext]'
+          name: utils.assetsPath('media/[name].[hash:7].[ext]')
         }
       },
       {
@@ -74,29 +60,12 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'static/fonts/[name].[hash:7].[ext]'
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
     ]
   },
-  // 插件
   plugins: [
-    new VueLoaderPlugin(),
-    // html模板打包
-    new HtmlWebpackPlugin({
-      filename: resolve('dist/index.html'),
-      template: resolve('index.html'),
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-      },
-      chunksSortMode: 'dependency'
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'static/css/[name].[hash].css',
-      chunkFilename: 'static/css/[name].[hash].css'
-    })
+    new VueLoaderPlugin()
   ]
 }
