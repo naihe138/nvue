@@ -5,7 +5,7 @@ module.exports = {
     assetsSubDirectory: 'static', // 静态文件目录
     assetsPublicPath: '/', // 相对文件路径
     proxyTable: {},
-    host: '0.0.0.0',
+    host: 'localhost',
     port: '8000',
     autoOpenBrowser: false, // 是否自动打开浏览器
     errorOverlay: true, // 浏览器错误提示遮罩层

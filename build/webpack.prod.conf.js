@@ -4,7 +4,11 @@ const merge = require('webpack-merge')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin') // npm i --save-dev html-webpack-plugin@next
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// 一个优化'压缩CSS的WebPack插件
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const utils = require('./utils')
 const config = require('./config')
@@ -32,7 +36,6 @@ const webpackConfig = merge(baseWebpackConfig, {
           {
             loader: 'css-loader',
             options: { 
-              importLoaders: 1,
               sourceMap: false
             }
           },
@@ -54,13 +57,32 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   // 此选项控制是否以及如何生成source-map。cheap-module-eval-source-map is faster for development
   devtool: config.build.devtool,
-
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        parallel: true,
+        sourceMap: false,
+        cache: true
+      }),
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: { safe: true, map: config.build.productionSourceMap }
+      })
+    ]
+  },
   plugins: [
     // css 提取
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[hash].css'),
-      chunkFilename: 'static/css/[name].[hash].css'
+      chunkFilename: 'static/css/[name].[hash].css',
+      sourceMap: false
     }),
+    // DLL
+    new webpack.DllReferencePlugin({
+      manifest: require('../dll/vue-manifest.json')
+    }),
+    // new webpack.DllReferencePlugin({
+    //   manifest: require('../dll/ui-manifest.json')
+    // }),
     // html模板打包
     new HtmlWebpackPlugin({
       filename: config.build.index,
@@ -75,8 +97,13 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // 该插件会根据模块的相对路径生成一个四位数的hash作为模块id, 建议用于生产环境。
     new webpack.HashedModuleIdsPlugin(),
-
     new webpack.optimize.ModuleConcatenationPlugin(),
+    // 插入到html
+    new AddAssetHtmlPlugin({
+      filepath: path.resolve(__dirname, '../dll/*.dll.js'),
+      publicPath: config.build.assetsPublicPath + 'static/js',
+      outputPath: '../dist/static/js'
+    }),
     // 复制静态文件
     new CopyWebpackPlugin([
       {

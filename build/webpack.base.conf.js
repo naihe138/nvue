@@ -45,11 +45,23 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         exclude: /node_modules/,
-        include: resolve('src')
+        include: resolve('src'),
+        options: {
+          cacheDirectory: resolve('./cache-loader'),
+          cacheIdentifier: 'cache-loader:{version} {process.env.NODE_ENV}'
+        }
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        use: isProduction ? [
+          {
+            loader: 'cache-loader',
+            options: {
+              cacheDirectory: resolve('cache-loader'),
+            }
+          },
+          'babel-loader'
+        ] : 'babel-loader',
         exclude: /node_modules/,
         include: resolve('src')
       },

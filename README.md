@@ -198,3 +198,11 @@ process.stdout.write(stats.toString({
 },
 
 ````
+
+### 六、打包优化，对应第六次commit
+
+1、添加`DllPlugin`和`DllReferencePlugin`来打包优化不变的库，
+2、通过`cache-loader`来做`loader`的缓存，
+3、通过`UglifyJsPlugin`的`parallel`来开启多线程打包
+
+先运行`npm run dll` 然后 `npm run build`
