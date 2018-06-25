@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "build": "NODE_ENV=production node build/build.js",
-    "dll": "NODE_ENV=production webpack --progress --config build/webpack.dll.conf.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "build": "cross-env NODE_ENV=production node build/build.js",
+    "dll": "cross-env NODE_ENV=production webpack --progress --config build/webpack.dll.conf.js",
     "lint": "eslint --ext .js,.vue src --cache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -33,6 +33,7 @@
     "cache-loader": "^1.2.2",
     "chalk": "^2.4.1",
     "copy-webpack-plugin": "^4.5.1",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -67,10 +68,10 @@
     "vue-loader": "^15.2.4",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.10.2",
     "webpack-cli": "3.0.1",
     "webpack-dev-server": "^3.1.4",
-    "webpack-merge": "^4.1.2",
-    "webpack": "^4.10.2"
+    "webpack-merge": "^4.1.2"
   },
   "engines": {
     "node": ">= 6.0.0",
