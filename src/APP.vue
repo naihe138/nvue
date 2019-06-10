@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import test from '@/components/test'
-export default {
-  name: 'app',
-  components: {
-    test
+  import test from '@/components/test'
+  export default {
+    name: 'app',
+    components: {
+      test
+    }
   }
-}
 </script>

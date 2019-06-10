@@ -3,10 +3,10 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin') // npm i --save-dev html-webpack-plugin@next
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserJSPlugin = require('terser-webpack-plugin')
 // 一个优化'压缩CSS的WebPack插件
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
@@ -25,44 +25,25 @@ const webpackConfig = merge(baseWebpackConfig, {
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
   },
-  module: {
-    rules: [
-      // 它会应用到普通的 `.css` 文件
-      // 以及 `.vue` 文件中的 `<style>` 块
-      {
-        test: /\.s?css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: { 
-              sourceMap: false
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: false
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: false
-            }
-          } 
-        ]
-      }
-    ]
-  },
   // 此选项控制是否以及如何生成source-map。cheap-module-eval-source-map is faster for development
   devtool: config.build.devtool,
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserJSPlugin({
         parallel: true,
         sourceMap: false,
-        cache: true
+        cache: '../build-catch/',
+        terserOptions: {
+          compress: {
+            inline: 1, // https://github.com/mishoo/UglifyJS2/issues/2842
+            warnings: false,
+            drop_console: true,
+            drop_debugger: true
+          },
+          output: {
+            comments: false
+          }
+        }
       }),
       new OptimizeCSSAssetsPlugin({
         cssProcessorOptions: { safe: true, map: config.build.productionSourceMap }
@@ -80,9 +61,6 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DllReferencePlugin({
       manifest: require('../dll/vue-manifest.json')
     }),
-    // new webpack.DllReferencePlugin({
-    //   manifest: require('../dll/ui-manifest.json')
-    // }),
     // html模板打包
     new HtmlWebpackPlugin({
       filename: config.build.index,
@@ -113,7 +91,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       }
     ]),
     // 打包进度
-    new webpack.ProgressPlugin(true)
+    new webpack.ProgressPlugin({})
   ]
 })
 

@@ -1,11 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-
+const TerserJSPlugin = require('terser-webpack-plugin')
 module.exports = {
+  mode: 'production',
   entry: {
     vue: ['vue/dist/vue.esm.js', 'vue-router', 'vuex', 'axios'],
-    // ui: ['element-ui', 'echarts']
   },
   output: {
     path: path.join(__dirname, '../dll'),
@@ -14,10 +13,21 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserJSPlugin({
         parallel: true,
         sourceMap: false,
-        cache: true
+        cache: '../build-catch/',
+        terserOptions: {
+          compress: {
+            inline: 1, // https://github.com/mishoo/UglifyJS2/issues/2842
+            warnings: false,
+            drop_console: true,
+            drop_debugger: true
+          },
+          output: {
+            comments: false
+          }
+        }
       })
     ]
   },

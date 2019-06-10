@@ -28,6 +28,10 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 1,
     // 禁止重复 import
-    "space-before-function-paren": ["off", "always"]
+    "space-before-function-paren": ["off", "always"],
+    'indent': 'off',
+    'vue/script-indent': ['warn', 2, {
+      'baseIndent': 1
+    }]
   }
 }

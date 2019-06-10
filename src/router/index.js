@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Foo from '@/components/foo'
-import Bar from '@/components/bar'
+
+const Foo = () => import(/* webpackChunkName: "group-foo" */ '../components/foo.vue')
+const Bar = () => import(/* webpackChunkName: "group-bar" */ '../components/bar.vue')
+
 
 Vue.use(VueRouter)
 

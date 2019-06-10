@@ -9,14 +9,14 @@
 </template>
 
 <script>
-export default {
-  name: 'test',
-  data() {
-    return {
-      msg: '我是msg1123'
+  export default {
+    name: 'test',
+    data() {
+      return {
+        msg: '我是msg1123'
+      }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>

@@ -13,7 +13,7 @@ module.exports = {
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
     useEslint: true, // 便宜使用eslint-loader模块
     showEslintErrorsInOverlay: false, // eslint浏览器错误提示遮罩层
-    devtool: 'cheap-module-eval-source-map', // Source Maps
+    devtool: 'source-map', // Source Maps
     cssSourceMap: true, // css Source Maps
     cacheBusting: false, // vue debugg 提示
   },
@@ -28,7 +28,7 @@ module.exports = {
     // 生产环境的souce map
     productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
-    devtool: '#source-map',
+    devtool: 'none',
     // 开启静态文件的Gzip压缩
     // 如果是true 的话  需要 npm install --save-dev compression-webpack-plugin
     productionGzip: false,
