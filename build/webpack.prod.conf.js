@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin')
+const HappyPack = require('happypack')
 // 一个优化'压缩CSS的WebPack插件
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
@@ -50,6 +51,51 @@ const webpackConfig = merge(baseWebpackConfig, {
       })
     ]
   },
+  module: {
+    rules: [
+      {
+        test: /\.(js|vue)$/,
+        use: ['happypack/loader?id=eslint'],
+        enforce: 'pre',
+        include: [resolve('src')],
+        exclude: /node_modules/
+      },
+      // {
+      //   test: /\.vue$/,
+      //   loader: ['happypack/loader?id=vue'],
+      //   exclude: /node_modules/,
+      //   include: resolve('src'),
+        
+      // },
+      {
+        test: /\.js$/,
+        use: ['happypack/loader?id=babel'],
+        exclude: /node_modules/,
+        include: resolve('src')
+      },
+      {
+        test: /\.vue$/,
+        exclude: /node_modules/,
+        include: resolve('src'),
+        use: [
+          // 'thread-loader',
+          {
+            loader: 'vue-loader',
+            options: {
+              cacheDirectory: resolve('./build-catch'),
+              cacheIdentifier: 'cache-loader:{version} {process.env.NODE_ENV}'
+            }
+          }
+        ]
+      },
+      // {
+      //   test: /\.js$/,
+      //   use: 'babel-loader',
+      //   exclude: /node_modules/,
+      //   include: resolve('src')
+      // }
+    ]
+  },
   plugins: [
     // css 提取
     new MiniCssExtractPlugin({
@@ -75,6 +121,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // 该插件会根据模块的相对路径生成一个四位数的hash作为模块id, 建议用于生产环境。
     new webpack.HashedModuleIdsPlugin(),
+    // 开启 Scope Hoisting
+    // Scope Hoisting 可以让 Webpack 打包出来的代码文件更小、运行的更快， 它又译作 "作用域提升"
     new webpack.optimize.ModuleConcatenationPlugin(),
     // 插入到html
     new AddAssetHtmlPlugin({
@@ -91,7 +139,41 @@ const webpackConfig = merge(baseWebpackConfig, {
       }
     ]),
     // 打包进度
-    new webpack.ProgressPlugin({})
+    new webpack.ProgressPlugin({}),
+    // eslint多线程
+    new HappyPack({
+      id: 'eslint',
+      use: [
+        {
+          loader: 'eslint-loader',
+          options: {
+            cache: true,
+            formatter: require('eslint-friendly-formatter'),
+            emitWarning: !config.dev.showEslintErrorsInOverlay
+          }
+        }
+      ]
+    }),
+    // babel多线程
+    new HappyPack({
+      id: 'babel',
+      use: [
+        {
+          loader: 'babel-loader'
+        }
+      ]
+    }),
+    // vue多线程
+    // new HappyPack({
+    //   id: 'vue',
+    //   loaders: [{
+    //     loader: 'vue-loader',
+    //     option: {
+    //       cacheDirectory: resolve('./build-catch'),
+    //       cacheIdentifier: 'cache-loader:{version} {process.env.NODE_ENV}'
+    //     }
+    //   }]
+    // })
   ]
 })
 

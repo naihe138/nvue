@@ -20,7 +20,38 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
   // 此选项控制是否以及如何生成source-map。cheap-module-eval-source-map is faster for development
   devtool: config.dev.devtool,
-
+  module: {
+    rules: [
+      {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: [resolve('src')],
+        exclude: /node_modules/,
+        options: {
+          cache: true,
+          formatter: require('eslint-friendly-formatter'),
+          emitWarning: !config.dev.showEslintErrorsInOverlay
+        }
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        exclude: /node_modules/,
+        include: resolve('src'),
+        options: {
+          cacheDirectory: resolve('./build-catch'),
+          cacheIdentifier: 'cache-loader:{version} {process.env.NODE_ENV}'
+        }
+      },
+      {
+        test: /\.js$/,
+        use: 'babel-loader',
+        exclude: /node_modules/,
+        include: resolve('src')
+      }
+    ]
+  },
   // 这是开发服务配置，包括热替换什么的 依赖  ./config.js
   devServer: {
     // 当使用内联模式(inline mode)时，控制台(console)将显示消息，可能的值有 none, error, warning 或者 info（默认值）。

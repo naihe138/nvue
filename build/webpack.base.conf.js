@@ -1,7 +1,6 @@
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const config = require('./config')
 const utils = require('./utils')
 
 function resolve(dir) {
@@ -27,34 +26,7 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [resolve('src')],
-        exclude: /node_modules/,
-        options: {
-          formatter: require('eslint-friendly-formatter'),
-          emitWarning: !config.dev.showEslintErrorsInOverlay
-        }
-      },
       ...utils.cssLoader(),
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        exclude: /node_modules/,
-        include: resolve('src'),
-        options: {
-          cacheDirectory: resolve('./build-catch'),
-          cacheIdentifier: 'cache-loader:{version} {process.env.NODE_ENV}'
-        }
-      },
-      {
-        test: /\.js$/,
-        use: 'babel-loader',
-        exclude: /node_modules/,
-        include: resolve('src')
-      },
       {
         test: /.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',

@@ -2,9 +2,8 @@
 require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
-
-const ora = require('ora') // 终端的菊花loading
-const rm = require('rimraf') // node rm -rf 命令模块
+const ora = require('ora')
+const rm = require('rimraf')
 const path = require('path')
 const chalk = require('chalk')
 const webpack = require('webpack')
@@ -22,7 +21,7 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     process.stdout.write(stats.toString({
       colors: true,
       modules: false,
-      children: false,
+      children: false, // If you are using ts-loader, setting this to true will make TypeScript errors show up during build.
       chunks: false,
       chunkModules: false
     }) + '\n\n')
