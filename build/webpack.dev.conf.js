@@ -16,6 +16,10 @@ const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 const Local = address.ip()
 
+function resolve(dir) {
+  return path.resolve(__dirname, '..', dir)
+}
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
   // 此选项控制是否以及如何生成source-map。cheap-module-eval-source-map is faster for development
