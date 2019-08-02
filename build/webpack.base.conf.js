@@ -2,7 +2,7 @@ const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const utils = require('./utils')
-
+const config = require('./config')
 function resolve(dir) {
   return path.resolve(__dirname, '..', dir)
 }
@@ -15,7 +15,9 @@ module.exports = {
   output: {
     path: resolve('dist'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
