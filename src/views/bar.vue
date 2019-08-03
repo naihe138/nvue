@@ -1,5 +1,7 @@
 <template>
-  <div>foo</div>
+  <div class="textCenter">
+    bar
+  </div>
 </template>
 
 <script>
