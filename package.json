@@ -1,15 +1,14 @@
 {
   "name": "vue-webpack4",
   "version": "1.0.0",
-  "description": "",
+  "description": "a vue project with webapck4",
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "build": "cross-env NODE_ENV=production node build/build.js",
     "dll": "cross-env NODE_ENV=production webpack --progress --config build/webpack.dll.conf.js",
     "lint": "eslint --ext .js,.vue src --cache",
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
