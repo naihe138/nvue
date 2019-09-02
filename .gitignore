@@ -3,3 +3,4 @@ cache
 cache-loader
 dist
 build-catch
+.DS_store

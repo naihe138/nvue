@@ -6,7 +6,7 @@ module.exports = {
     assetsPublicPath: '/', // 相对文件路径
     proxyTable: {},
     host: 'localhost',
-    port: '8000',
+    port: '8080',
     autoOpenBrowser: false, // 是否自动打开浏览器
     errorOverlay: true, // 浏览器错误提示遮罩层
     notifyOnErrors: true, // 编译错误的时候通知提示，需要friendly-errors-webpack-plugin 配合

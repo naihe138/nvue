@@ -4,7 +4,7 @@
     <h2>{{msg}}</h2>
     <div class="name"></div>
     <div class="test">一款高度定制可配置的vue项目webpack打包器</div>
-    <img style="border-radius: 4px;" src="../assest/abc.jpeg" alt="测试图片">
+    <img style="width: 200px;" src="@/assest/logo.png" alt="测试图片">
     <div class="btn">
       <router-link to="/">home</router-link>|
       <router-link to="/foo">foo</router-link>|
@@ -15,7 +15,7 @@
 
 <script>
   export default {
-    name: 'test',
+    name: 'Hello',
     data() {
       return {
         msg: '自定义打包器'
@@ -25,7 +25,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import url('../scss/test.scss');
+  @import url('../scss/hello.scss');
   .box {
     text-align: center;
   }

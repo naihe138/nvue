@@ -1,16 +1,16 @@
 <template>
   <div>
-    <test />
+    <Hello />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import test from '@/components/test'
+  import Hello from '@/components/Hello'
   export default {
     name: 'app',
     components: {
-      test
+      Hello
     }
   }
 </script>
