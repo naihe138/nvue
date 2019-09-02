@@ -1,6 +1,6 @@
 {
   "name": "vue-webpack4",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "a vue project with webapck4",
   "main": "index.js",
   "scripts": {
