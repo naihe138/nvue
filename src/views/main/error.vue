@@ -1,7 +1,5 @@
 <template>
-  <div class="textCenter">
-    bar
-  </div>
+  <h1 class="textCenter">404</h1>
 </template>
 
 <script>
