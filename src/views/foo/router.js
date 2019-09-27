@@ -1,4 +1,4 @@
-const Foo = () => import(/* webpackChunkName: "bar" */ './index.vue')
+const Foo = () => import(/* webpackChunkName: "foo" */ './index.vue')
 
 export default [
   { path: '/foo', component: Foo }

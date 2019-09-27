@@ -1,5 +1,5 @@
 <template>
-  <div style="color: pink">
+  <h1 style="color: #ee1004; text-align: center">
     foo
-  </div>
+  </h1>
 </template>

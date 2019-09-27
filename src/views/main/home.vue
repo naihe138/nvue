@@ -1,5 +1,5 @@
 <template>
-  <div class="textCenter">
+  <h1 class="textCenter">
     home 主页面
-  </div>
+  </h1>
 </template>

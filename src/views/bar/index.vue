@@ -1,5 +1,5 @@
 <template>
-  <div style="color: blue">
+  <h1 style="color: blue; text-align: center">
     bar
-  </div>
+  </h1>
 </template>

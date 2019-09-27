@@ -1,3 +1,5 @@
 const context = require.context('../', true, /views\/foo\/router\.js$/)
 
-console.log(context)
+const ROUTERS = context.keys().reduce((c, i) => c.concat(context(i).default), [])
+
+export default ROUTERS
