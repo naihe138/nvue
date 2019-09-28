@@ -23,8 +23,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
+    filename: utils.assetsPath('js/[name].js'),
+    chunkFilename: utils.assetsPath('js/[name].js')
   },
   // 此选项控制是否以及如何生成source-map。cheap-module-eval-source-map is faster for development
   devtool: config.build.devtool,
@@ -49,7 +49,11 @@ const webpackConfig = merge(baseWebpackConfig, {
       new OptimizeCSSAssetsPlugin({
         cssProcessorOptions: { safe: true, map: config.build.productionSourceMap }
       })
-    ]
+    ],
+    namedModules: true,
+    namedChunks: true,
+    providedExports: true,
+    usedExports: true
   },
   module: {
     rules: [
@@ -99,8 +103,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // css 提取
     new MiniCssExtractPlugin({
-      filename: utils.assetsPath('css/[name].[hash].css'),
-      chunkFilename: 'static/css/[name].[hash].css',
+      filename: utils.assetsPath('css/[name].css'),
+      chunkFilename: 'static/css/[name].css',
       sourceMap: false
     }),
     // DLL
@@ -120,7 +124,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency' // 允许控制chunk的排序在插入到HTML之前
     }),
     // 该插件会根据模块的相对路径生成一个四位数的hash作为模块id, 建议用于生产环境。
-    new webpack.HashedModuleIdsPlugin(),
+    // new webpack.HashedModuleIdsPlugin(),
     // 开启 Scope Hoisting
     // Scope Hoisting 可以让 Webpack 打包出来的代码文件更小、运行的更快， 它又译作 "作用域提升"
     new webpack.optimize.ModuleConcatenationPlugin(),

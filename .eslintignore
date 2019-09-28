@@ -4,3 +4,4 @@ config/
 dist/
 cache/
 dll/
+dist copy/
