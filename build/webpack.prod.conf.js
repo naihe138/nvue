@@ -52,7 +52,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     ],
     namedModules: true,
     namedChunks: true,
-    providedExports: true,
+    providedExports: false,
     usedExports: true
   },
   module: {
