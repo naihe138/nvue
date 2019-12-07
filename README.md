@@ -28,3 +28,11 @@
 
 `npm install`
 
+
+## 利用nvue-cli安装
+
+````
+npm install -g @naice/nvue-cli
+
+nvue create <project name>
+````
