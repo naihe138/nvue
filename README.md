@@ -1,4 +1,4 @@
-# nvue
+### nvue
 一个用`webpack4`打包的`vue` 的项目，一步一步带你实现一个`vue`项目打包配置，每一个`commit`对应一个步骤。包括了：
 
 - 初始化项目，分离配置
@@ -20,16 +20,16 @@
 - 持续更新webpack最新稳定版本，升级所有依赖模块
 
 
-## 克隆项目
+### 克隆项目
 
 `git clone git@github.com:naihe138/nvue.git`
 
-## 安装
+### 安装
 
 `npm install`
 
 
-## 利用nvue-cli安装
+### 利用nvue-cli安装
 
 ````
 npm install -g @naice/nvue-cli
