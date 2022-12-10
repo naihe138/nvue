@@ -49,7 +49,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^5.2.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fast-sass-loader": "^1.5.0",
     "file-loader": "^4.3.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
